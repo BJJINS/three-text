@@ -10,7 +10,7 @@ const height = window.innerHeight;
 
 const camera = new THREE.PerspectiveCamera(50, width / height);
 
-camera.position.set(0, 0, 10);
+camera.position.set(0, 0, 5);
 
 const scene = new THREE.Scene();
 
@@ -28,9 +28,28 @@ window.onresize = function () {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 };
+
+window.addEventListener("dblclick", () => {
+    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement;
+    if (fullscreenElement) {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+        return;
+    }
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    } else if (canvas.webkitRequestFullscreen) {
+        canvas.webkitRequestFullscreen();
+    }
+});
+
+
 new OrbitControls(camera, canvas);
 const textureLoader = new THREE.TextureLoader();
-const matcapTexture = textureLoader.load("/textures/matcaps/8.png");
+const matcapTexture = textureLoader.load("/8.png");
 
 const fontLoader = new FontLoader();
 fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
